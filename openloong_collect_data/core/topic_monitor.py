@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""
-话题监控模块，负责追踪ROS话题的状态
+"""话题状态监控模块
+
+负责监控和追踪ROS话题的状态，提供实时状态信息
 """
 
 import time

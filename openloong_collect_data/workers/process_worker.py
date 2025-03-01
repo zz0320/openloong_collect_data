@@ -1,16 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""
-异步数据处理工作线程
+"""数据处理工作线程
+
+处理数据同步和转换任务的异步线程
 """
 
 import os
-import shutil
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from PyQt5.QtCore import QThread, pyqtSignal
-
-from src.core.data_processor import DataProcessor
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from ..core.data_processor import DataProcessor
 
 
 class DataProcessWorker(QThread):
@@ -46,7 +45,6 @@ class DataProcessWorker(QThread):
             self.finished_signal.emit(False, self.results)
     
     def process_all_directories(self):
-        temp_sync_dir = os.path.join(self.output_dir, "temp_sync")
         os.makedirs(self.output_dir, exist_ok=True)
         
         # 获取输出目录的基本名称（不含路径）
@@ -96,14 +94,6 @@ class DataProcessWorker(QThread):
         self.progress_signal.emit(f"成功: {successful}")
         self.progress_signal.emit(f"失败: {failed}")
         self.progress_signal.emit(f"结果保存到: {self.output_dir}")
-        
-        # 清理临时目录
-        try:
-            if os.path.exists(temp_sync_dir):
-                shutil.rmtree(temp_sync_dir)
-                self.progress_signal.emit("已清理临时目录")
-        except Exception as e:
-            self.progress_signal.emit(f"警告: 清理临时目录失败: {str(e)}")
         
         self.finished_signal.emit(successful > 0, self.results)
     

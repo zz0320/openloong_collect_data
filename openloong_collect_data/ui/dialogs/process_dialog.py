@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""
-处理结果展示对话框
+"""处理结果对话框
+
+展示数据处理结果的对话框组件
 """
 
 import os
 import sys
-import shutil
-from PyQt5.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QLabel, 
-                           QPushButton, QTableWidget, QTableWidgetItem,
-                           QHeaderView, QMessageBox, QFrame, QWidget)
+from PyQt5.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, 
+                            QLabel, QTableWidget, QTableWidgetItem, 
+                            QPushButton, QMessageBox, QFrame, QHeaderView)
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QFont
 
@@ -159,6 +159,7 @@ class ProcessResultDialog(QDialog):
             
         # 执行删除
         try:
+            import shutil
             shutil.rmtree(final_output_dir)
             QMessageBox.information(self, "成功", f"已删除 {dir_name} 的处理结果")
             

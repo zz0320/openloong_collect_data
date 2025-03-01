@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""
-异步ZIP压缩工作线程
+"""ZIP压缩工作线程
+
+处理数据压缩任务的异步线程
 """
 
 import os

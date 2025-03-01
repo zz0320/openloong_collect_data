@@ -1,23 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""
-轨迹回放对话框
+"""轨迹回放对话框
+
+用于控制和显示机器人轨迹回放
 """
 
 import os
-import h5py
-import time
 import sys
-from datetime import datetime  # 添加缺少的导入
-from PyQt5.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QGridLayout, 
-                            QLabel, QPushButton, QProgressBar, QTextEdit,
-                            QGroupBox, QComboBox, QCheckBox, QFrame, QMessageBox,
-                            QFileDialog)  # 添加缺少的QFileDialog导入
-from PyQt5.QtCore import Qt, QTimer, QMetaObject, pyqtSlot
-from PyQt5.QtGui import QPixmap, QIcon, QTextCursor
+import time
+import h5py
+import numpy as np
 
-from src.workers.playback_worker import PlaybackThread
+from PyQt5.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QGridLayout, 
+                          QPushButton, QLabel, QProgressBar, QTextEdit,
+                          QGroupBox, QComboBox, QCheckBox, QFrame)
+from PyQt5.QtCore import Qt, pyqtSlot
+from PyQt5.QtGui import QIcon, QPixmap, QTextCursor
+
+from ...workers.playback_worker import PlaybackThread
 
 
 class TrajectoryPlayerDialog(QDialog):
@@ -59,7 +60,7 @@ class TrajectoryPlayerDialog(QDialog):
         
         layout.addWidget(file_group)
         
-        # 图像显示区域 (新增)
+        # 图像显示区域
         image_group = QGroupBox("相机图像")
         image_layout = QHBoxLayout(image_group)
         
@@ -168,6 +169,7 @@ class TrajectoryPlayerDialog(QDialog):
             self.log_message("请先停止回放再更换文件", error=True)
             return
             
+        from PyQt5.QtWidgets import QFileDialog
         file_path, _ = QFileDialog.getOpenFileName(
             self, "选择HDF5文件", "", "HDF5文件 (*.h5 *.hdf5);;所有文件 (*.*)"
         )
@@ -335,6 +337,7 @@ class TrajectoryPlayerDialog(QDialog):
     
     def log_message(self, message, error=False, update=False):
         """添加日志消息"""
+        from datetime import datetime
         timestamp = datetime.now().strftime('%H:%M:%S')
         
         if error:

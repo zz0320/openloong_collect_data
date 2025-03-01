@@ -1,20 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""
-轨迹回放线程
+"""轨迹回放工作线程
+
+处理机器人轨迹回放的异步线程
 """
 
 import os
 import time
+import numpy as np
 import rospy
-from PyQt5.QtCore import QThread, pyqtSignal, Qt
+from PyQt5.QtCore import QThread, pyqtSignal, Qt, QTimer
 from PyQt5.QtGui import QPixmap
 from sensor_msgs.msg import JointState
+
+# 尝试导入机器人控制消息类型
 try:
     from sdk.msg import AlohaCmd
 except ImportError:
-    # 创建一个简单的替代类
+    # 如果无法导入，创建一个替代类
     class AlohaCmd:
         def __init__(self):
             self.arx_pos_left = []

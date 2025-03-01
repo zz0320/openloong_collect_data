@@ -13,8 +13,8 @@
 
 ```bash
 # 克隆仓库
-git clone https://github.com/openloong/collect_data.git
-cd collect_data
+git clone https://github.com/zz0320/openloong_collect_data.git
+cd openloong_collect_data
 
 # 安装依赖
 pip install -r requirements.txt
